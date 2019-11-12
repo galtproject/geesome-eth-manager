@@ -13,14 +13,14 @@ const Web3 = require("web3");
 const Web3Utils = require("web3-utils");
 
 export default class ChainService {
-  websocketProvider: any;
-  web3: any;
-  wsServer: string;
+  websocketProvider;
+  web3;
+  wsServer;
   
-  callbackOnReconnect: any;
+  callbackOnReconnect;
 
   contractList = [];
-  contractsByAddress: any = {};
+  contractsByAddress = {};
   
   redeployed = false;
 
@@ -32,7 +32,7 @@ export default class ChainService {
     this.subscribeForReconnect();
   }
 
-  getEventsFromBlock(contract, eventName: string, blockNumber?: number): Promise<ChainEvent[]> {
+  getEventsFromBlock(contract, eventName, blockNumber = null) {
     if(!contract) {
       console.log(`✖️ Event ${eventName} getting events ignored, contract not found`);
       return new Promise((resolve) => resolve([]));
@@ -46,7 +46,7 @@ export default class ChainService {
     });
   }
 
-  subscribeForNewEvents(contract, eventName: string, blockNumber: number, callback) {
+  subscribeForNewEvents(contract, eventName, blockNumber, callback) {
     if(!contract) {
       console.log(`✖️ Event ${eventName} subscribing ignored, contract not found`);
       return;
@@ -69,7 +69,7 @@ export default class ChainService {
     this.callbackOnReconnect = callback;
   }
 
-  private subscribeForReconnect() {
+  subscribeForReconnect() {
     this.websocketProvider.on('end', () => {
       setTimeout(() => {
         console.log(new Date().toISOString().slice(0, 19).replace('T', ' '), '🔁 Websocket reconnect');
@@ -88,7 +88,7 @@ export default class ChainService {
     });
   }
 
-  public createContract(name, address, abi) {
+  createContract(name, address, abi) {
     address = address.toLowerCase();
     
     this.contractList.push({
@@ -107,7 +107,7 @@ export default class ChainService {
   //   this.contractList.forEach()
   // }
   
-  public async getContractSymbol(address) {
+  async getContractSymbol(address) {
     const contract = new this.web3.eth.Contract([{"constant":true,"inputs":[],"name":"_symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function","signature":"0xb09f1266"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}], address);
     // console.log(this.contractsConfig['spaceLockerAbi']);
     return contract.methods.symbol().call({})
@@ -116,12 +116,7 @@ export default class ChainService {
       );
   }
 
-  public async callContractMethod(contract, methodName, args) {
+  async callContractMethod(contract, methodName, args) {
     return contract.methods[methodName].apply(contract, args).call({});
   }
-}
-
-export interface ChainEvent {
-  returnValues: any;
-  contractAddress;
 }

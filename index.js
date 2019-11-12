@@ -7,23 +7,30 @@
  * [Basic Agreement](ipfs/QmaCiXUmSrP16Gz8Jdzq6AJESY1EAANmmwha15uR3c1bsS)).
  */
 
-import OperationsQueue from "./operationsQueue";
+import OperationsQueue from "./operationsQueue/index";
 
 const xkcdPassword = require('xkcd-password')();
 const _ = require("lodash");
 
 export default class GeesomeEthManager {
   operationsQueue;
+  database;
+  chainService;
+  geesomeClient;
   
   constructor(
-    public database, 
-    public chainService, 
-    public geesomeClient
+    _database, 
+    _chainService, 
+    _geesomeClient
   ) {
+    this.database = _database;
+    this.chainService = _chainService;
+    this.geesomeClient = _geesomeClient;
+    
     this.operationsQueue = new OperationsQueue();
   }
   
-  async registerUser(userAddress, userData: any = {}) {
+  async registerUser(userAddress, userData) {
     console.log('registerUser', userAddress);
     userAddress = userAddress.toLowerCase();
     
@@ -55,7 +62,7 @@ export default class GeesomeEthManager {
     return this.database.addLog('registerUser', userAddress);
   }
   
-  async registerUserOperation(userAddress, userData: any = {}) {
+  async registerUserOperation(userAddress, userData) {
     this.operationsQueue.addOperation(async () => {
       return this.registerUser(userAddress, userData);
     });

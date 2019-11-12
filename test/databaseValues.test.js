@@ -17,7 +17,7 @@ describe("databaseValues", function () {
 
   describe('database', () => {
     before(async () => {
-      database = await require('../database')({
+      database = await require('../database/index')({
         name: databaseName,
         options: {logging: debugDatabase}
       });
