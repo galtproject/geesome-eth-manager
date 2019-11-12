@@ -8,7 +8,7 @@
  */
 
 module.exports = {
-  'name': 'geesome_eth_user_manager',
+  'name': 'geesome_eth_manager',
   'user': 'root',
   'password': 'root',
   'options': {
