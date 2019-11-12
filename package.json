@@ -11,11 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "@babel/node": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "@types/es6-promise": "^3.3.0",
     "axios": "^0.19.0",
     "fs": "0.0.1-security",
     "geesome-libs": "git://github.com/galtproject/geesome-libs.git#18ce246",
@@ -30,11 +25,8 @@
     "yaeti": "^1.0.2"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-    "mocha": "^5.2.0",
-    "ts-node": "^7.0.1"
+    "mocha": "^5.2.0"
   }
 }

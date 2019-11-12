@@ -12,7 +12,7 @@ import OperationsQueue from "./operationsQueue/index";
 const xkcdPassword = require('xkcd-password')();
 const _ = require("lodash");
 
-export default class GeesomeEthManager {
+module.exports = class GeesomeEthManager {
   operationsQueue;
   database;
   chainService;
@@ -67,4 +67,4 @@ export default class GeesomeEthManager {
       return this.registerUser(userAddress, userData);
     });
   }
-}
+};

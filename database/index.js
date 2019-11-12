@@ -14,7 +14,7 @@ const Op = Sequelize.Op;
 
 const config = require('./config');
 
-module.exports = async function (extendConfig?: any) {
+module.exports = async function (extendConfig = {}) {
   const extendedConfig = _.merge({}, config, extendConfig || {});
 
   let sequelize = new Sequelize(extendedConfig.name, extendedConfig.user, extendedConfig.password, extendedConfig.options);
@@ -30,9 +30,9 @@ module.exports = async function (extendConfig?: any) {
 };
 
 class MysqlDatabase {
-  sequelize: any;
-  models: any;
-  config: any;
+  sequelize;
+  models;
+  config;
 
   constructor(_sequelize, _models, _config) {
     this.sequelize = _sequelize;
@@ -45,20 +45,20 @@ class MysqlDatabase {
     await this.models.Value.destroy({where: {}});
   }
 
-  async getLog(name: string, value: string) {
+  async getLog(name, value) {
     return this.models.Log.findOne({where: {name, value}});
   }
 
-  async addLog(name: string, value: string) {
+  async addLog(name, value) {
     return this.models.Log.create({name, value});
   }
   
-  async getValue(key: string) {
+  async getValue(key) {
     const valueObj = await this.models.Value.findOne({where: {key}});
     return valueObj ? valueObj.content : null;
   }
 
-  async setValue(key: string, content: string) {
+  async setValue(key, content) {
     const valueObj = await this.models.Value.findOne({where: {key}});
     if (valueObj) {
       return valueObj.update({content}, {where: {key}})
@@ -67,7 +67,7 @@ class MysqlDatabase {
     }
   }
 
-  async clearValue(key: string) {
+  async clearValue(key) {
     return this.models.Value.destroy({where: {key}});
   }
 }

@@ -9,7 +9,7 @@
  * [Basic Agreement](ipfs/QmaCiXUmSrP16Gz8Jdzq6AJESY1EAANmmwha15uR3c1bsS)).
  */
 
-export default class OperationsQueue {
+module.exports = class OperationsQueue {
   queue = [];
   
   active = false;

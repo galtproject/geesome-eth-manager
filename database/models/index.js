@@ -8,7 +8,7 @@
  */
 
 module.exports = async function (sequelize) {
-  const models: any = {};
+  const models = {};
 
   models.Log = await require('./log')(sequelize, models);
   models.Value = await require('./value')(sequelize, models);

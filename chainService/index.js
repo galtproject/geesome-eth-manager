@@ -12,7 +12,7 @@ const _ = require('lodash');
 const Web3 = require("web3");
 const Web3Utils = require("web3-utils");
 
-export default class ChainService {
+module.exports = class ChainService {
   websocketProvider;
   web3;
   wsServer;
