@@ -33,7 +33,7 @@ export default class OperationsQueue {
     
     const callbackResult = callback();
     if(callbackResult && callbackResult.then) {
-      callbackResult.then(() => this.run())
+      callbackResult.catch((e) => {console.error(e)}).then(() => this.run());
     } else {
       this.run();
     }

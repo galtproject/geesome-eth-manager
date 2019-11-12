@@ -46,11 +46,11 @@ class MysqlDatabase {
   }
 
   async getLog(name: string, value: string) {
-    return this.models.Value.findOne({where: {name, value}});
+    return this.models.Log.findOne({where: {name, value}});
   }
 
   async addLog(name: string, value: string) {
-    return this.models.Value.create({name, value});
+    return this.models.Log.create({name, value});
   }
   
   async getValue(key: string) {
