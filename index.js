@@ -13,11 +13,6 @@ const xkcdPassword = require('xkcd-password')();
 const _ = require("lodash");
 
 module.exports = class GeesomeEthManager {
-  operationsQueue;
-  database;
-  chainService;
-  geesomeClient;
-  
   constructor(
     _database, 
     _chainService, 

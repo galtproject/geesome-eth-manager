@@ -30,10 +30,6 @@ module.exports = async function (extendConfig = {}) {
 };
 
 class MysqlDatabase {
-  sequelize;
-  models;
-  config;
-
   constructor(_sequelize, _models, _config) {
     this.sequelize = _sequelize;
     this.models = _models;

@@ -10,9 +10,10 @@
  */
 
 module.exports = class OperationsQueue {
-  queue = [];
-  
-  active = false;
+  constructor() {
+    this.queue = [];
+    this.active = false;
+  }
   
   addOperation(callback) {
     this.queue.push(callback);

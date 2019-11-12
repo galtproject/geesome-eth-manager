@@ -13,16 +13,6 @@ const Web3 = require("web3");
 const Web3Utils = require("web3-utils");
 
 module.exports = class ChainService {
-  websocketProvider;
-  web3;
-  wsServer;
-  
-  callbackOnReconnect;
-
-  contractList = [];
-  contractsByAddress = {};
-  
-  redeployed = false;
 
   constructor(_wsServer) {
     this.wsServer = _wsServer;
@@ -30,6 +20,11 @@ module.exports = class ChainService {
     this.web3 = new Web3(this.websocketProvider);
 
     this.subscribeForReconnect();
+
+    this.contractList = [];
+    this.contractsByAddress = {};
+
+    this.redeployed = false;
   }
 
   getEventsFromBlock(contract, eventName, blockNumber = null) {
