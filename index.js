@@ -7,7 +7,7 @@
  * [Basic Agreement](ipfs/QmaCiXUmSrP16Gz8Jdzq6AJESY1EAANmmwha15uR3c1bsS)).
  */
 
-import OperationsQueue from "./operationsQueue/index";
+const OperationsQueue = require("./operationsQueue");
 
 const xkcdPassword = require('xkcd-password')();
 const _ = require("lodash");
