@@ -1,5 +1,5 @@
 # Geesome ETH manager
-Geesome module for listen Ethereum contracts for users regitration with their ethereum addresses. 
+Library for custom Geesome modules, that listen Ethereum contracts for user registration with their ethereum addresses. 
 After registration - users will be able to authorize in Geesome node by MetaMask and ethereum signature.
 
 ## Example
@@ -18,8 +18,8 @@ const pIteration = require("p-iteration");
 
 (async () => {
   const geesomeClient = new GeesomeClient({
-      server: 'http://localhost:7711',
-      apiKey: 'BWBWEGC-ZZA4DZW-QEG8HFW-GYS1KVA'
+      server: 'http://localhost:7711', // api address of GeeSome node
+      apiKey: 'BWBWEGC-ZZA4DZW-QEG8HFW-GYS1KVA' // api key of admin user in GeeSome node
   });
 
   await geesomeClient.init();
@@ -44,6 +44,7 @@ const pIteration = require("p-iteration");
     let prevBlockNumber = parseInt(await database.getValue('lastBlockNumber')) || 0;
     const currentBlockNumber = await chainService.getCurrentBlock();
     
+    // Your deployed contract with abi
     const contract = chainService.createContract('myContract', '0xecb69875c977b2072f60995dcf46a32386d1efdb', [{"name":"buyStorage","inputs":[{"name":"_storageRecipient","type":"address"}],"outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function","signature":"0x8119c065"},{"anonymous":false,"inputs":[{"indexed":false,"name":"storageRecipient","type":"uint256"}],"name":"Buy","type":"event","signature":"0x77f92a1b6a1a11de8ca49515ad4c1fad45632dd3442167d74b90b304a3c7a758"}]);
 
     async function handleBuyStorageEvent(event) {
