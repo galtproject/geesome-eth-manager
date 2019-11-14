@@ -6,7 +6,7 @@ After registration - users will be able to authorize in Geesome node by MetaMask
 You can deploy Smart Contract for buy storage space for example. When user makes the transaction - this module will catch the event and register user.
 Also by Smart Contract events you can change storage limits for users and etc.
 
-```
+```javascript
 const GeesomeEthManager = require('geesome-eth-manager');
 const ChainService = require("geesome-eth-manager/chainService");
 const databaseService = require('geesome-eth-manager/database');
