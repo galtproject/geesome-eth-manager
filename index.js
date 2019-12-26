@@ -11,6 +11,7 @@ const OperationsQueue = require("./operationsQueue");
 
 const xkcdPassword = require('xkcd-password')();
 const _ = require("lodash");
+const pIteration = require("p-iteration");
 
 module.exports = class GeesomeEthManager {
   constructor(
@@ -32,14 +33,14 @@ module.exports = class GeesomeEthManager {
     const existLog = await this.database.getLog('registerUser', userAddress);
     if(existLog) {
       console.log('user', userAddress, 'already registered, found in logs');
-      return onCreate ? onCreate(false) : null;
+      return onCreate ? onCreate(null) : null;
     }
 
     const existAccount = await this.geesomeClient.adminGetUserAccount('ethereum', userAddress);
     if(existAccount) {
       console.log('user', userAddress, 'already registered, found in geesome');
       await this.database.addLog('registerUser', userAddress);
-      return onCreate ? onCreate(false) : null;
+      return onCreate ? onCreate(null) : null;
     }
 
     if(!userData.name) {
@@ -48,17 +49,25 @@ module.exports = class GeesomeEthManager {
       userData.name = secretKey + " " + cutAddress;
     }
     
-    await this.geesomeClient.adminCreateUser({
+    const createdUser = await this.geesomeClient.adminCreateUser({
       name: userData.name,
       accounts: [{provider: 'ethereum', address: userAddress}],
       ...userData
     });
 
+    await this.database.addLog('registerUser', userAddress);
+
     if(onCreate) {
-      onCreate(true);
+      onCreate(createdUser);
     }
-    
-    return this.database.addLog('registerUser', userAddress);
+
+    if(userData.limits) {
+      await pIteration.forEach(userData.limits, (userLimit) => {
+        userLimit.userId = createdUser.id;
+        userLimit.isActive = true;
+        return this.geesomeClient.adminSetUserLimit(userLimit);
+      })
+    }
   }
   
   async registerUserOperation(userAddress, userData, onCreate = null) {
