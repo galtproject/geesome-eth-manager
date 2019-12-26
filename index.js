@@ -25,21 +25,21 @@ module.exports = class GeesomeEthManager {
     this.operationsQueue = new OperationsQueue();
   }
   
-  async registerUser(userAddress, userData) {
+  async registerUser(userAddress, userData, onCreate = null) {
     console.log('registerUser', userAddress);
     userAddress = userAddress.toLowerCase();
     
     const existLog = await this.database.getLog('registerUser', userAddress);
     if(existLog) {
       console.log('user', userAddress, 'already registered, found in logs');
-      return;
+      return onCreate ? onCreate(false) : null;
     }
 
     const existAccount = await this.geesomeClient.adminGetUserAccount('ethereum', userAddress);
     if(existAccount) {
       console.log('user', userAddress, 'already registered, found in geesome');
       await this.database.addLog('registerUser', userAddress);
-      return;
+      return onCreate ? onCreate(false) : null;
     }
 
     if(!userData.name) {
@@ -53,13 +53,17 @@ module.exports = class GeesomeEthManager {
       accounts: [{provider: 'ethereum', address: userAddress}],
       ...userData
     });
+
+    if(onCreate) {
+      onCreate(true);
+    }
     
     return this.database.addLog('registerUser', userAddress);
   }
   
-  async registerUserOperation(userAddress, userData) {
+  async registerUserOperation(userAddress, userData, onCreate = null) {
     this.operationsQueue.addOperation(async () => {
-      return this.registerUser(userAddress, userData);
+      return this.registerUser(userAddress, userData, onCreate = null);
     });
   }
 };
