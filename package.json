@@ -22,7 +22,8 @@
     "web3": "^1.0.0-beta.52",
     "websocket": "^1.0.30",
     "xkcd-password": "^2.0.0",
-    "yaeti": "^1.0.2"
+    "yaeti": "^1.0.2",
+    "is-ipfs": "^0.6.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",
