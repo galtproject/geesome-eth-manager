@@ -81,7 +81,7 @@ module.exports = class ChainService {
         const promise = callback(error, e);
         if(promise && promise.then) {
           promise.then(() => {
-            this.onAfterNewEvent();
+            this.onAfterNewEvent(e);
           })
         }
       }, 1000);
