@@ -78,7 +78,12 @@ module.exports = class ChainService {
       }
       // delay for ethereum node to write new data from event to storage
       setTimeout(() => {
-        callback(error, e);
+        const promise = callback(error, e);
+        if(promise && promise.then) {
+          promise.then(() => {
+            this.onAfterNewEvent();
+          })
+        }
       }, 1000);
     });
   }
