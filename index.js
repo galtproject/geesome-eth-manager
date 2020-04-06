@@ -72,7 +72,7 @@ module.exports = class GeesomeEthManager {
   
   async registerUserOperation(userAddress, userData, onCreate = null) {
     this.operationsQueue.addOperation(async () => {
-      return this.registerUser(userAddress, userData, onCreate = null);
+      return this.registerUser(userAddress, userData, onCreate);
     });
   }
 };
