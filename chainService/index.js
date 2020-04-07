@@ -32,7 +32,7 @@ module.exports = class ChainService {
     this.redeployed = false;
   }
 
-  getEventsFromBlock(contract, eventName, blockNumber = null) {
+  getEventsFromBlock(contract, eventName, blockNumber = null, filter = null) {
     if (!contract) {
       log(`✖️ Event ${eventName} getting events ignored, contract not found`);
       return new Promise((resolve) => resolve([]));
@@ -41,7 +41,7 @@ module.exports = class ChainService {
       log(`✖️ Event ${eventName} getting events ignored, event not found`);
       return new Promise((resolve) => resolve([]));
     }
-    return contract.getPastEvents(eventName, {fromBlock: blockNumber}).then(events => {
+    return contract.getPastEvents(eventName, {fromBlock: blockNumber, filter}).then(events => {
       log(`✅️ Event ${eventName} got ${events.length} items, by contract ${contract._address}`);
       return events.map(e => {
         e.contractAddress = e.address;
