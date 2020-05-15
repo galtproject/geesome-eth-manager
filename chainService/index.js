@@ -365,6 +365,10 @@ module.exports = class ChainService {
     return Web3Utils.utf8ToHex(string)
   }
 
+  isAddress(string) {
+    return Web3Utils.isAddress(string)
+  }
+
   hexToString(hex) {
     if (!hex) {
       return "";
