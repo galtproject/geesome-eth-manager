@@ -32,7 +32,7 @@ module.exports = class ChainService {
     this.redeployed = false;
   }
 
-  getEventsFromBlock(contract, eventName, blockNumber = null, filter = null) {
+  getEventsFromBlock(contract, eventName, blockNumber = 0, filter = null) {
     if (!contract) {
       log(`✖️ Event ${eventName} getting events ignored, contract not found`);
       return new Promise((resolve) => resolve([]));
