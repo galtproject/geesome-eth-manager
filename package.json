@@ -14,7 +14,7 @@
     "axios": "^0.19.0",
     "fs": "0.0.1-security",
     "geesome-libs": "git://github.com/galtproject/geesome-libs.git#db7d3fc",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "mysql2": "^1.6.4",
     "p-iteration": "^1.1.7",
     "sequelize": "5.19.0",
